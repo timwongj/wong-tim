@@ -25,19 +25,12 @@
 	vertical-align:middle;
 }
 
-.table-striped
-{
-	margin-bottom:100px;
-}
-
 .cornerCommsFrame {
 	width:100%;
 	height:8025px;
-	margin-bottom:100px;
 }
 
 .edgeCommsFrame {
 	width:100%;
 	height:9325px;
-	margin-bottom:100px;
 }
