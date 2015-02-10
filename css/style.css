@@ -26,7 +26,8 @@
 }
 
 #scramble {
-	font-size:20pt;
+	font-size:18pt;
+	text-align:center;
 }
 
 #timer {
@@ -40,17 +41,15 @@
 	margin:0;
 }
 
-#tableDiv {
-	display:inline-block;
-    overflow-y:scroll;
-    max-height:500px;
-}
-
 #centerDiv {
 	text-align:center;
 }
 
-#scramble {
-	text-align:center;
-	font-size:16pt;
+#tableDiv {
+	display:inline-block;
+    overflow-y:scroll;
+    max-height:500px;
+    padding:10px;
+    border-radius:5px;
+    background-color:#eee;
 }

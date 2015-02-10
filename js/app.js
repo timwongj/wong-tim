@@ -2,7 +2,7 @@ var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0, solveNumber
 
 $(document).ready(function()
 {
-	$(".panel").draggable({grid:[10, 10]});
+	$("#timer").text("0.000");
 	$("#resetButton").click(function () {
 		localStorage.clear();
 		location.reload();
