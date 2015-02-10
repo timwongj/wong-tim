@@ -126,6 +126,27 @@ $(document).ready(function()
 				isTiming = 0;
 		}
 	});
+	$(document).on('keydown', function (e)
+	{
+		if (e.keyCode === 13) 
+		{
+			scrambleLength = $("#scrambleLength").val();
+			if (scrambleType == 2)
+					$("#scramble").text(generate2x2Scramble(scrambleLength));
+				if (scrambleType == 3)
+					$("#scramble").text(generate3x3Scramble(scrambleLength));
+				if (scrambleType == 4)
+					$("#scramble").text(generate4x4Scramble(scrambleLength));
+				if (scrambleType == 5)
+					$("#scramble").text(generate5x5Scramble(scrambleLength));
+				if (scrambleType == 6)
+					$("#scramble").text(generate6x6Scramble(scrambleLength));
+				if (scrambleType == 7)
+					$("#scramble").text(generate7x7Scramble(scrambleLength));
+				else
+					$("#scramble").text(generate3x3Scramble(scrambleLength));
+		}
+	});
 });
 
 function updateTime()
