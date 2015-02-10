@@ -4,10 +4,12 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="../css/style.css">
-	<script src="../js/app.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="../images/cubeLogo.png"/>
-    <title>Notation</title>
+	<link rel="stylesheet" href="jQuery/jQuery-ui.css">
+	<script src="jQuery/jquery-ui.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script src="js/app.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="images/cubeLogo.png"/>
+    <title>Tim Wong</title>
 </head>
 <body>
 	<nav class="navbar navbar-inverse">
@@ -20,20 +22,20 @@
         				<span class="icon-bar"></span>
         				<span class="icon-bar"></span>
       				</button>
-					<a class="navbar-brand" href="../index.html">
-						<img class="logo" alt="Tim Wong" src="../images/cubeLogo.png">
+					<a class="navbar-brand" href="">
+						<img class="logo" alt="Tim Wong" src="images/cubeLogo.png">
 					</a>
 				</div>
 				<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-					<ul class="nav navbar-nav">
-						<li><a href="../index.html">Home</a></li>
-						<li><a href="cornerComms.html">3-Cycle Corners</a></li>
-						<li><a href="edgeComms.html">3-Cycle Edges</a></li>
-						<li><a href="OPAlgs.html">OP Corners</a></li>
-						<li><a href="M2Algs.html">M2 Edges</a></li>
-						<li><a href="otherAlgs.html">Other Algorithms</a></li>
-						<li class="active"><a href="">Notation<span class="sr-only">(current)</span></a></li>
-						<li><a href="timer.html">Timer</a></li>
+					<ul id="sortable" class="nav navbar-nav">
+						<li><a href="index.html">Home</a></li>
+						<li><a href="bldAlgorithms/cornerComms.html">3-Cycle Corners</a></li>
+						<li><a href="bldAlgorithms/edgeComms.html">3-Cycle Edges</a></li>
+						<li><a href="bldAlgorithms/OPAlgs.html">OP Corners</a></li>
+						<li><a href="bldAlgorithms/M2Algs.html">M2 Edges</a></li>
+						<li><a href="bldAlgorithms/otherAlgs.html">Other Algorithms</a></li>
+						<li><a href="bldAlgorithms/notation.html">Notation</a></li>
+						<li class="active"><a href="">Timer<span class="sr-only">(current)</span></a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="https://www.worldcubeassociation.org/results/p.php?i=2007WONG02" target="blank">WCA Profile</a></li>
@@ -43,8 +45,15 @@
 		</div>
 	</nav>
 	<div class="container">
-		<div class="page-header">
-			<h1>Notation</h1>
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-md-8">
+					<p id="timer">00:00:00</p>
+				</div>
+				<div class="col-md-4">
+					<p id="times"></p>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="nav navbar-default navbar-fixed-bottom">
