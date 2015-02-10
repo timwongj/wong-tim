@@ -1,63 +1,29 @@
 $(function() {
-    $(".jumbotron" ).draggable({grid:[10, 10]});
-    $(".panel" ).draggable({grid:[10, 10]});
-    $(".navbar-button" ).draggable({grid:[10, 10]});
-    
-	//updateTime(new Date());
-    
+    $(".panel").draggable({grid:[10, 10]});
 });
 
-var start, stop, isTiming = 0;
+var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0, solveNumber = 0;
 
-function updateTime()
+$(document).ready(function()
 {
-	var dtElapsed = new Date() - start;
-	
-	milliseconds = (dtElapsed % 1000);
-	seconds = Math.floor(dtElapsed / 1000) % 60;
-	minutes = Math.floor(((dtElapsed / 1000) / 60) % 60);
-				
-	if (minutes == 0)
-		timeElapsed = seconds + "." + milliseconds;
-	else
-	{
-		seconds = pad2(seconds);
-		timeElapsed = minutes + ":" + seconds + "." + milliseconds;
-	}
-	
-	milliseconds = pad3(milliseconds);
-	
-    if (isTiming == 1)
-    {
-    	$("#timer").text(timeElapsed);
-    }
-    setTimeout(updateTime, 10);
-}
-
-$(document).ready(function(){
 	var dt, timeElapsed, minutes, seconds, milliseconds, dtElapsed;
 	$("#scramble").text(generateScramble(20));
 	$(document).on('keydown', function (e)
 	{
 		if (e.keyCode === 32)
 		{
-			dt = new Date();
 			if (isTiming == 0)
+				$("#timer").css('color', 'green');
+			else if (allowedToUpdate == 1)
 			{
-				start = dt;
-				isTiming = 1;
-				updateTime(start);
-			}
-			else
-			{
-				stop = dt;
-				isTiming = 0;
-				
+				updateTimer = 0;
+				allowedToUpdate = 0;
+				stop = new Date();
 				dtElapsed = stop - start;
 				milliseconds = (dtElapsed % 1000);
 				seconds = Math.floor(dtElapsed / 1000) % 60;
 				minutes = Math.floor(((dtElapsed / 1000) / 60) % 60);
-				
+				milliseconds = pad3(milliseconds);
 				if (minutes == 0)
 					timeElapsed = seconds + "." + milliseconds;
 				else
@@ -65,16 +31,50 @@ $(document).ready(function(){
 					seconds = pad2(seconds);
 					timeElapsed = minutes + ":" + seconds + "." + milliseconds;
 				}
-				
-				milliseconds = pad3(milliseconds);
-				
 				$("#timer").text(timeElapsed);
+				solveNumber += 1;
+				$("#times").append("<tr>\n<td>" + solveNumber + "</td>\n<td>" + timeElapsed + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
 				$("#scramble").text(generateScramble(20));
-				$("#times").append("<p id=\"times\">" + timeElapsed + "</p>");
 			}
 		}
 	});
+	$(document).on('keyup', function (e)
+	{
+		if (e.keyCode === 32) 
+		{
+			if (isTiming == 0)
+			{
+				$("#timer").css('color', 'black');
+				isTiming = 1;
+				updateTimer = 1;
+				allowedToUpdate = 1;
+				start = new Date();
+				updateTime();
+			}
+			else
+				isTiming = 0;
+		}
+	});
 });
+
+function updateTime()
+{
+	var elapsed = new Date() - start;
+	milliseconds = (elapsed % 1000);
+	seconds = Math.floor(elapsed / 1000) % 60;
+	minutes = Math.floor(((elapsed / 1000) / 60) % 60);
+	milliseconds = pad3(milliseconds);			
+	if (minutes == 0)
+		timeElapsed = seconds + "." + milliseconds;
+	else
+	{
+		seconds = pad2(seconds);
+		timeElapsed = minutes + ":" + seconds + "." + milliseconds;
+	}
+    if (updateTimer == 1)
+    	$("#timer").text(timeElapsed);
+    setTimeout(updateTime, 1);
+}
 
 function generateScramble(length)
 {
@@ -124,6 +124,6 @@ function pad3(n){
     	return n;
     else if (n > 9)
     	return "0" + n;
-    else
+    else 
     	return "00" + n;
 }
