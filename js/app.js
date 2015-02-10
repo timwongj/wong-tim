@@ -1,11 +1,19 @@
-$(function() {
-    $(".panel").draggable({grid:[10, 10]});
-});
-
-var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0, solveNumber = 0;
+var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0, solveNumber = localStorage.length;
 
 $(document).ready(function()
 {
+	$(".panel").draggable({grid:[10, 10]});
+	$("#resetButton").click(function () {
+		localStorage.clear();
+		location.reload();
+	});
+    for(var i = 0; i < localStorage.length; i++)
+	{
+    	var key = localStorage.key(i);
+    	var value = localStorage[key];
+    	if (key != 'length')
+    		$("#times").prepend("<tr>\n<td>" + key + "</td>\n<td>" + value + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
+	}
 	var dt, timeElapsed, minutes, seconds, milliseconds, dtElapsed;
 	$("#scramble").text(generateScramble(20));
 	$(document).on('keydown', function (e)
@@ -33,7 +41,15 @@ $(document).ready(function()
 				}
 				$("#timer").text(timeElapsed);
 				solveNumber += 1;
-				$("#times").append("<tr>\n<td>" + solveNumber + "</td>\n<td>" + timeElapsed + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
+				localStorage.setItem(pad2(localStorage.length + 1), timeElapsed);
+				$("#times").text("");
+				for(var i = 0; i < localStorage.length; i++)
+				{
+    				var key = localStorage.key(i);
+    				var value = localStorage[key];
+    				if (key != 'length')
+    					$("#times").prepend("<tr>\n<td>" + key + "</td>\n<td>" + value + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
+				}
 				$("#scramble").text(generateScramble(20));
 			}
 		}
@@ -73,7 +89,7 @@ function updateTime()
 	}
     if (updateTimer == 1)
     	$("#timer").text(timeElapsed);
-    setTimeout(updateTime, 1);
+    setTimeout(updateTime, 10);
 }
 
 function generateScramble(length)

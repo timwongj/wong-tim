@@ -38,3 +38,9 @@
 	padding:0;
 	margin:0;
 }
+
+#tableDiv {
+	display: inline-block;
+    overflow-y: scroll;
+    max-height:500px;
+}
