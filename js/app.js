@@ -17,11 +17,16 @@ function updateTime()
 	seconds = Math.floor(dtElapsed / 1000) % 60;
 	minutes = Math.floor(((dtElapsed / 1000) / 60) % 60);
 				
-	seconds = pad2(seconds);
-	minutes = pad2(minutes);
+	if (minutes == 0)
+		timeElapsed = seconds + "." + milliseconds;
+	else
+	{
+		seconds = pad2(seconds);
+		timeElapsed = minutes + ":" + seconds + "." + milliseconds;
+	}
+	
 	milliseconds = pad3(milliseconds);
-				
-	timeElapsed = minutes + ":" + seconds + "." + milliseconds;
+	
     if (isTiming == 1)
     {
     	$("#timer").text(timeElapsed);
@@ -53,11 +58,16 @@ $(document).ready(function(){
 				seconds = Math.floor(dtElapsed / 1000) % 60;
 				minutes = Math.floor(((dtElapsed / 1000) / 60) % 60);
 				
-				seconds = pad2(seconds);
-				minutes = pad2(minutes);
+				if (minutes == 0)
+					timeElapsed = seconds + "." + milliseconds;
+				else
+				{
+					seconds = pad2(seconds);
+					timeElapsed = minutes + ":" + seconds + "." + milliseconds;
+				}
+				
 				milliseconds = pad3(milliseconds);
 				
-				timeElapsed = minutes + ":" + seconds + "." + milliseconds;
 				$("#timer").text(timeElapsed);
 				$("#scramble").text(generateScramble(20));
 				$("#times").append("<p id=\"times\">" + timeElapsed + "</p>");
@@ -103,7 +113,10 @@ function generateScramble(length)
 
 function pad2(n)
 {
-    return n > 9 ? "" + n: "0" + n;
+    if (n > 9)
+    	return n;
+    else
+    	return "0" + n;
 }
 
 function pad3(n){
