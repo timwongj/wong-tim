@@ -25,11 +25,16 @@
 	vertical-align:middle;
 }
 
+#scramble {
+	font-size:20pt;
+}
+
 #timer {
 	font-size:100pt;
 }
 
 #times {
+	font-size:12pt;
 	padding:0;
 	margin:0;
 }
