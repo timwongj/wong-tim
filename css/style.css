@@ -25,6 +25,10 @@
 	vertical-align:middle;
 }
 
+.centeredDiv {
+	text-align:center;
+}
+
 #scramble {
 	font-size:18pt;
 	text-align:center;
@@ -41,15 +45,18 @@
 	margin:0;
 }
 
-#centerDiv {
-	text-align:center;
-}
-
 #tableDiv {
 	display:inline-block;
     overflow-y:scroll;
-    max-height:500px;
+    min-height:400px;
+    max-height:600px;
     padding:10px;
     border-radius:5px;
     background-color:#eee;
+    text-align:center;
+}
+
+#sessionButtonToolbar {
+	text-align:center;
+	padding:10px;
 }

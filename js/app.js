@@ -1,11 +1,33 @@
-var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0, solveNumber = localStorage.length, scrambleType = 3, scrambleLength = 20;
+var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0;
+var solveNumber = localStorage.length, scrambleType = 3, scrambleLength = 20, sessionNumber = 1;
 
 $(document).ready(function()
 {
 	$("#timer").text("0.000");
+	$("#sessionDropdownButton").html("Session 1 <span class=\"caret\"></span>");
+	$("#sessionDropdownMenu li a").click(function(){
+    	$("#sessionDropdownButton").html($(this).text() + " <span class=\"caret\"></span>");
+    	$("#sessionDropdownButton").val($(this).text());
+    	switch ($(this).text())
+    	{
+			case "Session 1": sessionNumber = 1; break;
+			case "Session 2": sessionNumber = 2; break;
+			case "Session 3": sessionNumber = 3; break;
+			case "Session 4": sessionNumber = 4; break;
+			case "Session 5": sessionNumber = 5; break;
+			case "Session 6": sessionNumber = 6; break;
+			case "Session 7": sessionNumber = 7; break;
+			case "Session 8": sessionNumber = 8; break;
+			case "Session 9": sessionNumber = 9; break;
+			case "Session 10": sessionNumber = 10; break;
+    	}
+	});
 	$("#resetButton").click(function () {
-		localStorage.clear();
-		location.reload();
+		if(confirm("Reset?"))
+		{
+			localStorage.clear();
+			location.reload();
+		}
 	});
 	$("#scramble2x2").click(function () {
 		scrambleType = 2;

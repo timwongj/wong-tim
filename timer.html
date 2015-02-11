@@ -49,7 +49,7 @@
 			<div class="col-md-9">
 				<div class="jumbotron">
 					<div class="row">
-						<div class="col-md-7" id="centerDiv">
+						<div class="col-md-7 centeredDiv">
 							<div class="btn-group" role="group" aria-label="..." id="scrambleType">
   								<button type="button" class="btn btn-default" id="scramble2x2">2x2</button>
   								<button type="button" class="btn btn-default" id="scramble3x3">3x3</button>
@@ -59,7 +59,7 @@
   								<button type="button" class="btn btn-default" id="scramble7x7">7x7</button>
 							</div>
 						</div>
-						<div class="col-md-4" id="centerDiv">
+						<div class="col-md-4 centeredDiv">
 							<div class="input-group">
   								<span class="input-group-addon" id="basic-addon1">Scramble Length</span>
   								<input type="text" class="form-control" value="20" aria-describedby="basic-addon1" id="scrambleLength">
@@ -72,7 +72,27 @@
 				</div>
 			</div>
 			<div class="col-md-3" id="tableDiv">
-				<p><button type="button" class="btn btn-warning" id="resetButton">Reset</button></p>
+				<div class="btn-toolbar" id="sessionButtonToolbar" role="toolbar" aria-label="...">
+					
+					<div class="dropdown pull-left">
+  						<button class="btn btn-default dropdown-toggle" type="button" id="sessionDropdownButton" data-toggle="dropdown" aria-expanded="true"></button>
+  						<ul class="dropdown-menu" id="sessionDropdownMenu" role="menu" aria-labelledby="dropdownMenu1">
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 1</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 2</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 3</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 4</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 5</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 6</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 7</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 8</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 9</a></li>
+    						<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Session 10</a></li>
+  						</ul>
+					</div>
+					<div class="btn-group pull-right" role="group" aria-label="...">
+						<button type="button" class="btn btn-warning" id="resetButton">Reset</button>
+					</div>
+				</div>
 				<div class="table-responsive">
 					<table class="table table-condensed table-bordered table-hover" id="timesTable">
 						<thead>
