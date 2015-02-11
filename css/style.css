@@ -29,6 +29,10 @@
 	text-align:center;
 }
 
+#timerJumbotron {
+	height:calc(100vh - 150px);
+}
+
 #scramble {
 	font-size:18pt;
 	text-align:center;
@@ -37,6 +41,18 @@
 #timer {
 	font-size:120pt;
 	text-align:center;
+}
+
+#scrambleTypeButtonGroup {
+	margin:5px;
+}
+
+#scrambleLengthInputGroup {
+	margin:5px;
+}
+
+#scrambleLength {
+	width:50px;
 }
 
 #times {
@@ -48,8 +64,7 @@
 #tableDiv {
 	display:inline-block;
     overflow-y:scroll;
-    min-height:500px;
-    max-height:600px;
+    height:calc(100vh - 150px);
     padding:10px;
     border-radius:5px;
     background-color:#eee;
@@ -58,5 +73,13 @@
 
 #sessionButtonToolbar {
 	text-align:center;
-	padding:10px;
+	padding-bottom:5px;
+}
+
+#sessionDropdownButton {
+	margin:5px;
+}
+
+#resetButton {
+	margin:5px;
 }

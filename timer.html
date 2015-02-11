@@ -37,9 +37,6 @@
 						<li><a href="bldAlgorithms/notation.html">Notation</a></li>
 						<li class="active"><a href="">Timer<span class="sr-only">(current)</span></a></li>
 					</ul>
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="https://www.worldcubeassociation.org/results/p.php?i=2007WONG02" target="blank">WCA Profile</a></li>
-					</ul>
 				</div>
 			</div>
 		</div>
@@ -47,10 +44,10 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-md-9">
-				<div class="jumbotron">
+				<div class="jumbotron" id="timerJumbotron">
 					<div class="row">
 						<div class="col-md-7 centeredDiv">
-							<div class="btn-group" role="group" aria-label="..." id="scrambleType">
+							<div class="btn-group" id="scrambleTypeButtonGroup" role="group" aria-label="..." id="scrambleType">
   								<button type="button" class="btn btn-default" id="scramble2x2">2x2</button>
   								<button type="button" class="btn btn-default" id="scramble3x3">3x3</button>
   								<button type="button" class="btn btn-default" id="scramble4x4">4x4</button>
@@ -60,7 +57,7 @@
 							</div>
 						</div>
 						<div class="col-md-4 centeredDiv">
-							<div class="input-group">
+							<div class="input-group" id="scrambleLengthInputGroup">
   								<span class="input-group-addon" id="basic-addon1">Scramble Length</span>
   								<input type="text" class="form-control" value="20" aria-describedby="basic-addon1" id="scrambleLength">
 							</div>
@@ -73,7 +70,6 @@
 			</div>
 			<div class="col-md-3" id="tableDiv">
 				<div class="btn-toolbar" id="sessionButtonToolbar" role="toolbar" aria-label="...">
-					
 					<div class="dropdown pull-left">
   						<button class="btn btn-default dropdown-toggle" type="button" id="sessionDropdownButton" data-toggle="dropdown" aria-expanded="true"></button>
   						<ul class="dropdown-menu" id="sessionDropdownMenu" role="menu" aria-labelledby="dropdownMenu1">
