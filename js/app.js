@@ -20,6 +20,7 @@ $(document).ready(function()
 		}
 	}
 	$("#timer").text("0.000");
+	printTimes();
 	$("#sessionDropdownButton").html("Session " + sessionNumber + " <span class=\"caret\"></span>");
 	$("#sessionDropdownMenu li a").click(function(){
     	$("#sessionDropdownButton").html($(this).text() + " <span class=\"caret\"></span>");
@@ -43,10 +44,7 @@ $(document).ready(function()
 			case "Session 15": sessionNumber = 15; break;
     	}
     	localStorage.setItem("sessionNumber", sessionNumber);
-    	$("#times").text("");
-		var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
-		for (var i = 0; i < sessionObj.numSolves; i++)
-			$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
+    	printTimes();
 	});
 	$("#resetButton").click(function () {
 		if(confirm("Reset Session " + sessionNumber + "?"))
@@ -102,9 +100,6 @@ $(document).ready(function()
 		$("#scramble").text(generate7x7Scramble(scrambleLength));
 		$("#scramble").css('font-size','14pt');
 	});
-	var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
-	for (var i = 0; i < sessionObj.numSolves; i++)
-		$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
 	var dt, timeElapsed, minutes, seconds, milliseconds, dtElapsed;
 	$("#scramble").text(generate3x3Scramble(20));
 	$(document).on('keydown', function (e)
@@ -134,6 +129,8 @@ $(document).ready(function()
 				solveNumber += 1;
 				var solveObj = {
 					time: timeElapsed,
+					avg5: "DNF",
+					avg12: "DNF",
 					scramble: $("#scramble").text(),
 					date: stop,
 					penalty: 0,
@@ -143,12 +140,8 @@ $(document).ready(function()
 				sessionObj.numSolves += 1;
 				sessionObj.list.push(solveObj);
 				localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
-				//console.log(localStorage.getItem("session" + sessionNumber));
 				localStorage.setItem(pad2(localStorage.length + 1), timeElapsed);
-				$("#times").text("");
-				var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
-				for (var i = 0; i < sessionObj.numSolves; i++)
-					$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
+				printTimes();
 				if (scrambleType == 2)
 					$("#scramble").text(generate2x2Scramble(scrambleLength));
 				if (scrambleType == 3)
@@ -223,6 +216,80 @@ function updateTime()
     if (updateTimer == 1)
     	$("#timer").text(timeElapsed);
     setTimeout(updateTime, 10);
+}
+
+function printTimes()
+{
+	updateAverages();
+	$("#times").text("");
+	var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
+	for (var i = 0; i < sessionObj.numSolves; i++)
+		$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + sessionObj.list[i].avg5 + "</td>\n<td>" + sessionObj.list[i].avg12 + "</tr>");
+}
+
+function updateAverages()
+{
+	var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
+	for (i = 0; i < sessionObj.list.length; i++)
+	{
+		if (i >= 4)
+		{
+			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
+			for (j = i; j > i - 5; j--)
+			{
+				if (sessionObj.list[j].time > maxValue)
+				{
+					maxIndex = j;
+					maxValue = sessionObj.list[j].time;
+				}
+				if (sessionObj.list[j].time < minValue)
+				{
+					minIndex = j;
+					minValue = sessionObj.list[j].time;
+				}
+			}
+			if ((minIndex == i) && (maxIndex == i))
+				minIndex -= 1;
+			var sum = 0;
+			for (j = i; j > i - 5; j--)
+			{
+				if (!((j == minIndex) || (j == maxIndex)))
+				{
+					sum += +sessionObj.list[j].time;
+				}
+			}
+			sessionObj.list[i].avg5 = (sum / 3).toFixed(3);
+		}
+		if (i >= 11)
+		{
+			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
+			for (j = i; j > i - 12; j--)
+			{
+				if (sessionObj.list[j].time > maxValue)
+				{
+					maxIndex = j;
+					maxValue = sessionObj.list[j].time;
+				}
+				if (sessionObj.list[j].time < minValue)
+				{
+					minIndex = j;
+					minValue = sessionObj.list[j].time;
+				}
+			}
+			if ((minIndex == i) && (maxIndex == i))
+				minIndex -= 1;
+			var sum = 0;
+			for (j = i; j > i - 12; j--)
+			{
+				if (!((j == minIndex) || (j == maxIndex)))
+				{
+					sum += +sessionObj.list[j].time;
+				}
+			}
+			sessionObj.list[i].avg12 = (sum / 10).toFixed(3);
+		}
+	}
+	localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
 }
 
 function generate2x2Scramble(length)
