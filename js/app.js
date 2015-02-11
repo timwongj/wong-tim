@@ -4,9 +4,17 @@ var solveNumber = localStorage.length, scrambleType = 3, scrambleLength = 20, se
 $(document).ready(function()
 {
 	if (localStorage.getItem("sessionNumber") == null)
-		localStorage.setItem("sessionNumber", "1");
+		localStorage.setItem("sessionNumber", sessionNumber);
 	else
 		sessionNumber = localStorage.getItem("sessionNumber");
+	if (localStorage.getItem("scrambleType") == null)
+		localStorage.setItem("scrambleType", scrambleType);
+	else
+		scrambleType = localStorage.getItem("scrambleType");
+	if (localStorage.getItem("scrambleLength") == null)
+		localStorage.setItem("scrambleLength", scrambleLength);
+	else
+		scrambleLength = localStorage.getItem("scrambleLength");
 	for (i = 1; i <= 10; i++)
 	{
 		if (localStorage.getItem("session" + i) == null)
@@ -64,6 +72,8 @@ $(document).ready(function()
 		$("#scrambleLength").val(scrambleLength);
 		$("#scramble").text(generate2x2Scramble(scrambleLength));
 		$("#scramble").css('font-size','18pt');
+		localStorage.setItem("scrambleType", scrambleType);
+		localStorage.setItem("scrambleLength", scrambleLength);
 	});
 	$("#scramble3x3").click(function () {
 		scrambleType = 3;
@@ -71,6 +81,8 @@ $(document).ready(function()
 		$("#scrambleLength").val(scrambleLength);
 		$("#scramble").text(generate3x3Scramble(scrambleLength));
 		$("#scramble").css('font-size','18pt');
+		localStorage.setItem("scrambleType", scrambleType);
+		localStorage.setItem("scrambleLength", scrambleLength);
 	});
 	$("#scramble4x4").click(function () {
 		scrambleType = 4;
@@ -78,6 +90,8 @@ $(document).ready(function()
 		$("#scrambleLength").val(scrambleLength);
 		$("#scramble").text(generate4x4Scramble(scrambleLength));
 		$("#scramble").css('font-size','18pt');
+		localStorage.setItem("scrambleType", scrambleType);
+		localStorage.setItem("scrambleLength", scrambleLength);
 	});
 	$("#scramble5x5").click(function () {
 		scrambleType = 5;
@@ -85,6 +99,8 @@ $(document).ready(function()
 		$("#scrambleLength").val(scrambleLength);
 		$("#scramble").text(generate5x5Scramble(scrambleLength));
 		$("#scramble").css('font-size','18pt');
+		localStorage.setItem("scrambleType", scrambleType);
+		localStorage.setItem("scrambleLength", scrambleLength);
 	});
 	$("#scramble6x6").click(function () {
 		scrambleType = 6;
@@ -92,6 +108,8 @@ $(document).ready(function()
 		$("#scrambleLength").val(scrambleLength);
 		$("#scramble").text(generate6x6Scramble(scrambleLength));
 		$("#scramble").css('font-size','16pt');
+		localStorage.setItem("scrambleType", scrambleType);
+		localStorage.setItem("scrambleLength", scrambleLength);
 	});
 	$("#scramble7x7").click(function () {
 		scrambleType = 7;
@@ -99,9 +117,11 @@ $(document).ready(function()
 		$("#scrambleLength").val(scrambleLength);
 		$("#scramble").text(generate7x7Scramble(scrambleLength));
 		$("#scramble").css('font-size','14pt');
+		localStorage.setItem("scrambleType", scrambleType);
+		localStorage.setItem("scrambleLength", scrambleLength);
 	});
 	var dt, timeElapsed, minutes, seconds, milliseconds, dtElapsed;
-	$("#scramble").text(generate3x3Scramble(20));
+	printScramble();
 	$(document).on('keydown', function (e)
 	{
 		if (e.keyCode === 32)
@@ -142,20 +162,7 @@ $(document).ready(function()
 				localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
 				localStorage.setItem(pad2(localStorage.length + 1), timeElapsed);
 				printTimes();
-				if (scrambleType == 2)
-					$("#scramble").text(generate2x2Scramble(scrambleLength));
-				if (scrambleType == 3)
-					$("#scramble").text(generate3x3Scramble(scrambleLength));
-				if (scrambleType == 4)
-					$("#scramble").text(generate4x4Scramble(scrambleLength));
-				if (scrambleType == 5)
-					$("#scramble").text(generate5x5Scramble(scrambleLength));
-				if (scrambleType == 6)
-					$("#scramble").text(generate6x6Scramble(scrambleLength));
-				if (scrambleType == 7)
-					$("#scramble").text(generate7x7Scramble(scrambleLength));
-				else
-					$("#scramble").text(generate3x3Scramble(scrambleLength));
+				printScramble();
 			}
 		}
 	});
@@ -181,20 +188,9 @@ $(document).ready(function()
 		if (e.keyCode === 13) 
 		{
 			scrambleLength = $("#scrambleLength").val();
-			if (scrambleType == 2)
-					$("#scramble").text(generate2x2Scramble(scrambleLength));
-				if (scrambleType == 3)
-					$("#scramble").text(generate3x3Scramble(scrambleLength));
-				if (scrambleType == 4)
-					$("#scramble").text(generate4x4Scramble(scrambleLength));
-				if (scrambleType == 5)
-					$("#scramble").text(generate5x5Scramble(scrambleLength));
-				if (scrambleType == 6)
-					$("#scramble").text(generate6x6Scramble(scrambleLength));
-				if (scrambleType == 7)
-					$("#scramble").text(generate7x7Scramble(scrambleLength));
-				else
-					$("#scramble").text(generate3x3Scramble(scrambleLength));
+			localStorage.setItem("scrambleType", scrambleType);
+			localStorage.setItem("scrambleLength", scrambleLength);
+			printScramble();
 		}
 	});
 });
@@ -218,6 +214,48 @@ function updateTime()
     setTimeout(updateTime, 10);
 }
 
+function printScramble()
+{
+	scrambleLength = $("#scrambleLength").val(scrambleLength);
+	scrambleType = localStorage.getItem("scrambleType");
+	scrambleLength = localStorage.getItem("scrambleLength");
+	if (scrambleType == 2)
+	{
+		$("#scramble").text(generate2x2Scramble(scrambleLength));
+		$("#scramble").css('font-size','18pt');
+	}
+	else if (scrambleType == 3)
+	{
+		$("#scramble").text(generate3x3Scramble(scrambleLength));
+		$("#scramble").css('font-size','18pt');
+	}
+	else if (scrambleType == 4)
+	{
+		$("#scramble").text(generate4x4Scramble(scrambleLength));
+		$("#scramble").css('font-size','18pt');
+	}
+	else if (scrambleType == 5)
+	{
+		$("#scramble").text(generate5x5Scramble(scrambleLength));
+		$("#scramble").css('font-size','18pt');
+	}
+	else if (scrambleType == 6)
+	{
+		$("#scramble").text(generate6x6Scramble(scrambleLength));
+		$("#scramble").css('font-size','16pt');
+	}
+	else if (scrambleType == 7)
+	{
+		$("#scramble").text(generate7x7Scramble(scrambleLength));
+		$("#scramble").css('font-size','14pt');
+	}
+	else
+	{
+		$("#scramble").text(generate3x3Scramble(scrambleLength));
+		$("#scramble").css('font-size','18pt');
+	}
+}
+
 function printTimes()
 {
 	updateAverages();
@@ -225,6 +263,8 @@ function printTimes()
 	var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
 	for (var i = 0; i < sessionObj.numSolves; i++)
 		$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + sessionObj.list[i].avg5 + "</td>\n<td>" + sessionObj.list[i].avg12 + "</tr>");
+	$("#avg5").text("avg5: " + sessionObj.list[sessionObj.numSolves - 1].avg5);
+	$("#avg12").text("avg12: " + sessionObj.list[sessionObj.numSolves - 1].avg12);
 }
 
 function updateAverages()

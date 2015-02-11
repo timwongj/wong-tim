@@ -28,17 +28,30 @@
 
 #timerJumbotron {
 	height:calc(100vh - 150px);
-	padding:50px;
+	padding:30px;
+	overflow-y:scroll;
 }
 
 #scramble {
 	font-size:18pt;
 	text-align:center;
+	margin:5px;
 }
 
 #timer {
 	font-size:120pt;
 	text-align:center;
+	margin:5px;
+}
+
+#avg5 {
+	text-align:center;
+	margin:5px;
+}
+
+#avg12 {
+	text-align:center;
+	margin:5px;
 }
 
 #scrambleTypeButtonGroup {
@@ -54,16 +67,16 @@
 }
 
 #times {
-	font-size:12pt;
-	padding:0;
-	margin:0;
+	font-size:10pt;
+	padding:0px;
+	margin:0px;
 }
 
 #tableDiv {
 	display:inline-block;
     overflow-y:scroll;
-    height:calc(100vh - 150px);
-    padding:10px;
+	height:calc(100vh - 150px);
+	padding:10px;
     border-radius:5px;
     background-color:#eee;
     text-align:center;
