@@ -3,8 +3,24 @@ var solveNumber = localStorage.length, scrambleType = 3, scrambleLength = 20, se
 
 $(document).ready(function()
 {
+	if (localStorage.getItem("sessionNumber") == null)
+		localStorage.setItem("sessionNumber", "1");
+	else
+		sessionNumber = localStorage.getItem("sessionNumber");
+	for (i = 1; i <= 10; i++)
+	{
+		if (localStorage.getItem("session" + i) == null)
+		{
+			var newSession = {
+				sessionNumber: i,
+				numSolves: 0,
+				list: []
+			}
+			localStorage.setItem("session" + i, JSON.stringify(newSession));
+		}
+	}
 	$("#timer").text("0.000");
-	$("#sessionDropdownButton").html("Session 1 <span class=\"caret\"></span>");
+	$("#sessionDropdownButton").html("Session " + sessionNumber + " <span class=\"caret\"></span>");
 	$("#sessionDropdownMenu li a").click(function(){
     	$("#sessionDropdownButton").html($(this).text() + " <span class=\"caret\"></span>");
     	$("#sessionDropdownButton").val($(this).text());
@@ -20,12 +36,27 @@ $(document).ready(function()
 			case "Session 8": sessionNumber = 8; break;
 			case "Session 9": sessionNumber = 9; break;
 			case "Session 10": sessionNumber = 10; break;
+			case "Session 11": sessionNumber = 11; break;
+			case "Session 12": sessionNumber = 12; break;
+			case "Session 13": sessionNumber = 13; break;
+			case "Session 14": sessionNumber = 14; break;
+			case "Session 15": sessionNumber = 15; break;
     	}
+    	localStorage.setItem("sessionNumber", sessionNumber);
+    	$("#times").text("");
+		var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
+		for (var i = 0; i < sessionObj.numSolves; i++)
+			$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
 	});
 	$("#resetButton").click(function () {
-		if(confirm("Reset?"))
+		if(confirm("Reset Session " + sessionNumber + "?"))
 		{
-			localStorage.clear();
+			var newSession = {
+				sessionNumber: i,
+				numSolves: 0,
+				list: []
+			}
+			localStorage.setItem("session" + sessionNumber, JSON.stringify(newSession));
 			location.reload();
 		}
 	});
@@ -71,13 +102,9 @@ $(document).ready(function()
 		$("#scramble").text(generate7x7Scramble(scrambleLength));
 		$("#scramble").css('font-size','14pt');
 	});
-    for(var i = 0; i < localStorage.length; i++)
-	{
-    	var key = localStorage.key(i);
-    	var value = localStorage[key];
-    	if (key != 'length')
-    		$("#times").prepend("<tr>\n<td>" + key + "</td>\n<td>" + value + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
-	}
+	var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
+	for (var i = 0; i < sessionObj.numSolves; i++)
+		$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
 	var dt, timeElapsed, minutes, seconds, milliseconds, dtElapsed;
 	$("#scramble").text(generate3x3Scramble(20));
 	$(document).on('keydown', function (e)
@@ -105,15 +132,23 @@ $(document).ready(function()
 				}
 				$("#timer").text(timeElapsed);
 				solveNumber += 1;
+				var solveObj = {
+					time: timeElapsed,
+					scramble: $("#scramble").text(),
+					date: stop,
+					penalty: 0,
+					comment: ""
+				}
+				var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
+				sessionObj.numSolves += 1;
+				sessionObj.list.push(solveObj);
+				localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
+				//console.log(localStorage.getItem("session" + sessionNumber));
 				localStorage.setItem(pad2(localStorage.length + 1), timeElapsed);
 				$("#times").text("");
-				for(var i = 0; i < localStorage.length; i++)
-				{
-    				var key = localStorage.key(i);
-    				var value = localStorage[key];
-    				if (key != 'length')
-    					$("#times").prepend("<tr>\n<td>" + key + "</td>\n<td>" + value + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
-				}
+				var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
+				for (var i = 0; i < sessionObj.numSolves; i++)
+					$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + "</td>\n<td>" + "</tr>");
 				if (scrambleType == 2)
 					$("#scramble").text(generate2x2Scramble(scrambleLength));
 				if (scrambleType == 3)

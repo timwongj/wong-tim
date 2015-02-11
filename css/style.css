@@ -48,7 +48,7 @@
 #tableDiv {
 	display:inline-block;
     overflow-y:scroll;
-    min-height:400px;
+    min-height:500px;
     max-height:600px;
     padding:10px;
     border-radius:5px;
