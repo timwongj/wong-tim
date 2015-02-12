@@ -101,11 +101,20 @@
 	margin:5px;
 }
 
+.popover {
+	width:145px;
+}
+
 .popover-title {
     text-align:center;
 }
 .popover-content {
 	text-align:center;
+	padding:10px;
+}
+
+#commentInput {
+	margin-top:5px;
 }
 
 #myModal {
