@@ -24,6 +24,7 @@
 
 #timerJumbotron {
 	height:calc(100vh - 150px);
+	max-height:800px;
 	padding:30px;
 	overflow-y:scroll;
 }
@@ -80,7 +81,7 @@
 	display:inline-block;
     overflow-y:scroll;
 	height:calc(100vh - 150px);
-	max-height:600px;
+	max-height:800px;
 	padding:10px;
     border-radius:5px;
     background-color:#eee;
