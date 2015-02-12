@@ -322,6 +322,74 @@ function printTimes()
         	console.log("hidden");
     	}
 	});
+	$(document).on("click", ".avg5Cell", function () {
+		var solveNumber = this.id.substring(8);
+		var date = new Date(sessionObj.list[solveNumber - 1].date);
+		$("#myModal").css("top", "25%");
+		$("#myModalTitle").text("Average of 5: " + sessionObj.list[solveNumber - 1].avg5);
+		$("#myModalFooter").html("<p>" + date.toLocaleString() + "</p>");
+		$("#myModalBody").text("");
+		if (solveNumber >= 5)
+		{
+			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[solveNumber - 1].time, maxValue = sessionObj.list[solveNumber - 1].time;
+			for (i = solveNumber - 1; i >= solveNumber - 5; i--)
+			{
+				if (sessionObj.list[i].time > maxValue)
+				{
+					maxIndex = i;
+					maxValue = sessionObj.list[i].time;
+				}
+				if (sessionObj.list[i].time < minValue)
+				{
+					minIndex = i;
+					minValue = sessionObj.list[i].time;
+				}
+			}
+			if ((minIndex == solveNumber) && (maxIndex == solveNumber))
+				minIndex -= 1;
+			for (i = 0; i < 5; i++)
+			{
+				if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
+					$("#myModalBody").append("<p>" + (i + 1) + ". (" + sessionObj.list[solveNumber - 1 - i].time + ") " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
+				else
+					$("#myModalBody").append("<p>" + (i + 1) + ". " + sessionObj.list[solveNumber - 1 - i].time + " " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
+			}
+		}
+	});
+	$(document).on("click", ".avg12Cell", function () {
+		var solveNumber = this.id.substring(9);
+		var date = new Date(sessionObj.list[solveNumber - 1].date);
+		$("#myModal").css("top", "15%");
+		$("#myModalTitle").text("Average of 12: " + sessionObj.list[solveNumber - 1].avg12);
+		$("#myModalFooter").html("<p>" + date.toLocaleString() + "</p>");
+		$("#myModalBody").text("");
+		if (solveNumber >= 12)
+		{
+			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[solveNumber - 1].time, maxValue = sessionObj.list[solveNumber - 1].time;
+			for (i = solveNumber - 1; i >= solveNumber - 12; i--)
+			{
+				if (sessionObj.list[i].time > maxValue)
+				{
+					maxIndex = i;
+					maxValue = sessionObj.list[i].time;
+				}
+				if (sessionObj.list[i].time < minValue)
+				{
+					minIndex = i;
+					minValue = sessionObj.list[i].time;
+				}
+			}
+			if ((minIndex == solveNumber) && (maxIndex == solveNumber))
+				minIndex -= 1;
+			for (i = 0; i < 12; i++)
+			{
+				if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
+					$("#myModalBody").append("<p>" + (i + 1) + ". (" + sessionObj.list[solveNumber - 1 - i].time + ") " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
+				else
+					$("#myModalBody").append("<p>" + (i + 1) + ". " + sessionObj.list[solveNumber - 1 - i].time + " " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
+			}
+		}
+	});
 }
 
 function updateAverages()
@@ -349,12 +417,8 @@ function updateAverages()
 				minIndex -= 1;
 			var sum = 0;
 			for (j = i; j > i - 5; j--)
-			{
 				if (!((j == minIndex) || (j == maxIndex)))
-				{
 					sum += +sessionObj.list[j].time;
-				}
-			}
 			sessionObj.list[i].avg5 = (sum / 3).toFixed(3);
 		}
 		if (i >= 11)
@@ -377,12 +441,8 @@ function updateAverages()
 				minIndex -= 1;
 			var sum = 0;
 			for (j = i; j > i - 12; j--)
-			{
 				if (!((j == minIndex) || (j == maxIndex)))
-				{
 					sum += +sessionObj.list[j].time;
-				}
-			}
 			sessionObj.list[i].avg12 = (sum / 10).toFixed(3);
 		}
 	}
