@@ -331,7 +331,7 @@ function printTimes()
 		$("#myModalBody").text("");
 		if (solveNumber >= 5)
 		{
-			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[solveNumber - 1].time, maxValue = sessionObj.list[solveNumber - 1].time;
+			var minIndex = solveNumber - 1, maxIndex = solveNumber - 1, minValue = sessionObj.list[solveNumber - 1].time, maxValue = sessionObj.list[solveNumber - 1].time;
 			for (i = solveNumber - 1; i >= solveNumber - 5; i--)
 			{
 				if (sessionObj.list[i].time > maxValue)
@@ -365,7 +365,7 @@ function printTimes()
 		$("#myModalBody").text("");
 		if (solveNumber >= 12)
 		{
-			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[solveNumber - 1].time, maxValue = sessionObj.list[solveNumber - 1].time;
+			var minIndex = solveNumber - 1, maxIndex = solveNumber - 1, minValue = sessionObj.list[solveNumber - 1].time, maxValue = sessionObj.list[solveNumber - 1].time;
 			for (i = solveNumber - 1; i >= solveNumber - 12; i--)
 			{
 				if (sessionObj.list[i].time > maxValue)
@@ -399,7 +399,7 @@ function updateAverages()
 	{
 		if (i >= 4)
 		{
-			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
+			var minIndex = i, maxIndex = i, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
 			for (j = i; j > i - 5; j--)
 			{
 				if (sessionObj.list[j].time > maxValue)
@@ -423,7 +423,7 @@ function updateAverages()
 		}
 		if (i >= 11)
 		{
-			var minIndex = 0, maxIndex = 0, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
+			var minIndex = i, maxIndex = i, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
 			for (j = i; j > i - 12; j--)
 			{
 				if (sessionObj.list[j].time > maxValue)
