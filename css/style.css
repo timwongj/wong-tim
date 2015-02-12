@@ -22,10 +22,6 @@
 	vertical-align:middle;
 }
 
-.centeredDiv {
-	text-align:center;
-}
-
 #timerJumbotron {
 	height:calc(100vh - 150px);
 	padding:30px;
@@ -64,6 +60,14 @@
 
 #scrambleLength {
 	width:50px;
+}
+
+#scrambleTypeDiv {
+	text-align:center;
+}
+
+#scrambleLengthDiv {
+	text-align:center;
 }
 
 #times {
