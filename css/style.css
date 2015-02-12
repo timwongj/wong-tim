@@ -94,3 +94,15 @@
 #resetButton {
 	margin:5px;
 }
+
+.popover-title {
+    text-align:center;
+}
+.popover-content {
+	text-align:center;
+}
+
+#myModal {
+	position: absolute;
+    top:25%;
+}

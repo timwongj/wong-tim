@@ -31,8 +31,8 @@ $(document).ready(function()
 	printTimes();
 	$("#sessionDropdownButton").html("Session " + sessionNumber + " <span class=\"caret\"></span>");
 	$("#sessionDropdownMenu li a").click(function(){
-    	$("#sessionDropdownButton").html($(this).text() + " <span class=\"caret\"></span>");
-    	$("#sessionDropdownButton").val($(this).text());
+    	$("#sessionDropdownButton").html($(this).text() + " <span class=\"caret\"></span>")
+    								.val($(this).text());
     	switch ($(this).text())
     	{
 			case "Session 1": sessionNumber = 1; break;
@@ -70,8 +70,8 @@ $(document).ready(function()
 		scrambleType = 2;
 		scrambleLength = 10;
 		$("#scrambleLength").val(scrambleLength);
-		$("#scramble").text(generate2x2Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate2x2Scramble(scrambleLength))
+						.css('font-size','18pt');
 		localStorage.setItem("scrambleType", scrambleType);
 		localStorage.setItem("scrambleLength", scrambleLength);
 	});
@@ -79,8 +79,8 @@ $(document).ready(function()
 		scrambleType = 3;
 		scrambleLength = 20;
 		$("#scrambleLength").val(scrambleLength);
-		$("#scramble").text(generate3x3Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate3x3Scramble(scrambleLength))
+						.css('font-size','18pt');
 		localStorage.setItem("scrambleType", scrambleType);
 		localStorage.setItem("scrambleLength", scrambleLength);
 	});
@@ -88,8 +88,8 @@ $(document).ready(function()
 		scrambleType = 4;
 		scrambleLength = 40;
 		$("#scrambleLength").val(scrambleLength);
-		$("#scramble").text(generate4x4Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate4x4Scramble(scrambleLength))
+						.css('font-size','18pt');
 		localStorage.setItem("scrambleType", scrambleType);
 		localStorage.setItem("scrambleLength", scrambleLength);
 	});
@@ -97,8 +97,8 @@ $(document).ready(function()
 		scrambleType = 5;
 		scrambleLength = 60;
 		$("#scrambleLength").val(scrambleLength);
-		$("#scramble").text(generate5x5Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate5x5Scramble(scrambleLength))
+						.css('font-size','18pt');
 		localStorage.setItem("scrambleType", scrambleType);
 		localStorage.setItem("scrambleLength", scrambleLength);
 	});
@@ -106,8 +106,8 @@ $(document).ready(function()
 		scrambleType = 6;
 		scrambleLength = 80;
 		$("#scrambleLength").val(scrambleLength);
-		$("#scramble").text(generate6x6Scramble(scrambleLength));
-		$("#scramble").css('font-size','16pt');
+		$("#scramble").text(generate6x6Scramble(scrambleLength))
+						.css('font-size','16pt');
 		localStorage.setItem("scrambleType", scrambleType);
 		localStorage.setItem("scrambleLength", scrambleLength);
 	});
@@ -115,8 +115,8 @@ $(document).ready(function()
 		scrambleType = 7;
 		scrambleLength = 100;
 		$("#scrambleLength").val(scrambleLength);
-		$("#scramble").text(generate7x7Scramble(scrambleLength));
-		$("#scramble").css('font-size','14pt');
+		$("#scramble").text(generate7x7Scramble(scrambleLength))
+						.css('font-size','14pt');
 		localStorage.setItem("scrambleType", scrambleType);
 		localStorage.setItem("scrambleLength", scrambleLength);
 	});
@@ -221,38 +221,38 @@ function printScramble()
 	scrambleLength = localStorage.getItem("scrambleLength");
 	if (scrambleType == 2)
 	{
-		$("#scramble").text(generate2x2Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate2x2Scramble(scrambleLength))
+						.css('font-size','18pt');
 	}
 	else if (scrambleType == 3)
 	{
-		$("#scramble").text(generate3x3Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate3x3Scramble(scrambleLength))
+						.css('font-size','18pt');
 	}
 	else if (scrambleType == 4)
 	{
-		$("#scramble").text(generate4x4Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate4x4Scramble(scrambleLength))
+						.css('font-size','18pt');
 	}
 	else if (scrambleType == 5)
 	{
-		$("#scramble").text(generate5x5Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate5x5Scramble(scrambleLength))
+						.css('font-size','18pt');
 	}
 	else if (scrambleType == 6)
 	{
-		$("#scramble").text(generate6x6Scramble(scrambleLength));
-		$("#scramble").css('font-size','16pt');
+		$("#scramble").text(generate6x6Scramble(scrambleLength))
+						.css('font-size','16pt');
 	}
 	else if (scrambleType == 7)
 	{
-		$("#scramble").text(generate7x7Scramble(scrambleLength));
-		$("#scramble").css('font-size','14pt');
+		$("#scramble").text(generate7x7Scramble(scrambleLength))
+						.css('font-size','14pt');
 	}
 	else
 	{
-		$("#scramble").text(generate3x3Scramble(scrambleLength));
-		$("#scramble").css('font-size','18pt');
+		$("#scramble").text(generate3x3Scramble(scrambleLength))
+						.css('font-size','18pt');
 	}
 }
 
@@ -262,9 +262,66 @@ function printTimes()
 	$("#times").text("");
 	var sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
 	for (var i = 0; i < sessionObj.numSolves; i++)
-		$("#times").prepend("<tr>\n<td>" + (i + 1) + "</td>\n<td>" + sessionObj.list[i].time + "</td>\n<td>" + sessionObj.list[i].avg5 + "</td>\n<td>" + sessionObj.list[i].avg12 + "</tr>");
-	$("#avg5").text("avg5: " + sessionObj.list[sessionObj.numSolves - 1].avg5);
-	$("#avg12").text("avg12: " + sessionObj.list[sessionObj.numSolves - 1].avg12);
+	{
+		var tableHtml = "<tr>\n<td>" + (i + 1);
+		tableHtml = tableHtml.concat("</td>\n<td class=\"timesCell\" id=\"timesCell" + (i + 1) + "\" title=\"");
+		tableHtml = tableHtml.concat(sessionObj.list[i].time);
+		tableHtml = tableHtml.concat("\" data-container=\"#timesCell" + (i + 1) + "\" data-toggle=\"popover\" data-placement=\"right\" data-content=\"OK +2 DNF X\">");
+		tableHtml = tableHtml.concat(sessionObj.list[i].time);
+		tableHtml = tableHtml.concat("</td>\n<td class=\"avg5Cell\" id=\"avg5Cell" + (i + 1) + "\" data-toggle=\"modal\" data-target=\"#myModal\">");
+		tableHtml = tableHtml.concat(sessionObj.list[i].avg5);
+		tableHtml = tableHtml.concat("</td>\n<td class=\"avg12Cell\" id=\"avg12Cell" + (i + 1) + "\" data-toggle=\"modal\" data-target=\"#myModal\">");
+		tableHtml = tableHtml.concat(sessionObj.list[i].avg12);
+		tableHtml = tableHtml.concat("</td></tr>");
+		$("#times").prepend(tableHtml);
+	}
+	if (sessionObj.numSolves >= 5)
+		$("#avg5").text("avg5: " + sessionObj.list[sessionObj.numSolves - 1].avg5);
+	else
+		$("#avg5").text("");
+	if (sessionObj.numSolves >= 12)
+		$("#avg12").text("avg12: " + sessionObj.list[sessionObj.numSolves - 1].avg12);	
+	else
+		$("#avg12").text("");
+	$(".timesCell").popover({
+    	html: true,
+    	trigger: "hover",
+    	placement: 'right',
+    	animation: false
+		}).on({
+    		show: function (e) {
+        		var $this = $("#" + this.id);
+        		$this.data("hoveringPopover", true);
+        		if ($this.data("waitingForPopoverTO"))
+            		e.stopImmediatePropagation();
+    		},
+    		hide: function (e) {
+        		var $this = $("#" + this.id);
+        		if ($this.data("forceHidePopover")) {
+            		$this.data("forceHidePopover", false);
+            		return true;
+        		}
+        		e.stopImmediatePropagation();
+        		clearTimeout($this.data("popoverTO"));
+        		$this.data("hoveringPopover", false);
+        		$this.data("waitingForPopoverTO", true);
+        		$this.data("popoverTO", setTimeout(function () {
+            		if (!$this.data("hoveringPopover")) {
+                		$this.data("forceHidePopover", true);
+                		$this.data("waitingForPopoverTO", false);
+                		$this.popover("hide");
+            		}
+        		}, 0));
+        		return false;
+    		}
+		}).on({
+    	show: function () {
+        	console.log("shown");
+    	},
+    	hide: function () {
+        	console.log("hidden");
+    	}
+	});
 }
 
 function updateAverages()
