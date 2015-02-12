@@ -278,11 +278,11 @@ function printTimes()
 	if (sessionObj.numSolves >= 5)
 		$("#avg5").text("avg5: " + sessionObj.list[sessionObj.numSolves - 1].avg5);
 	else
-		$("#avg5").text("");
+		$("#avg5").text("avg5: DNF");
 	if (sessionObj.numSolves >= 12)
 		$("#avg12").text("avg12: " + sessionObj.list[sessionObj.numSolves - 1].avg12);	
 	else
-		$("#avg12").text("");
+		$("#avg12").text("avg12: DNF");
 	$(".timesCell").popover({
     	html: true,
     	trigger: "hover",
@@ -396,7 +396,6 @@ function generate2x2Scramble(length)
     for (i = 0; i < length; i++)
     {
         var turningOrientation = Math.floor((Math.random() * 3));
-        var innerTurningLayer = Math.floor((Math.random() * 2));
         var turningDirection = Math.floor((Math.random() * 3));
         while (turningOrientation == previousOrientation)
         {
@@ -405,26 +404,11 @@ function generate2x2Scramble(length)
             turningDirection = Math.floor((Math.random() * 3));
         }
         if (turningOrientation == 0)
-        {
-            if (innerTurningLayer == 0)
-                scramble = scramble.concat("U");
-            else
-                scramble = scramble.concat("D");
-        }
+            scramble = scramble.concat("U");
         else if (turningOrientation == 1)
-        {
-            if (innerTurningLayer == 0)
-                scramble = scramble.concat("F");
-            else
-                scramble = scramble.concat("B");
-        }
+            scramble = scramble.concat("F");
         else if (turningOrientation == 2)
-        {
-            if (innerTurningLayer == 0)
-                scramble = scramble.concat("L");
-            else
-                scramble = scramble.concat("R");
-        }
+            scramble = scramble.concat("R");
         switch (turningDirection)
         {
             case 1: scramble = scramble.concat("'"); break;
