@@ -1,8 +1,9 @@
 var start, stop, isTiming = 0, updateTimer = 0, allowedToUpdate = 0, typingComment = 0;
-var solveNumber = localStorage.length, solveIndex, fired = 0, scrambleType = 3, scrambleLength = 20, sessionNumber = 1;
+var solveIndex, fired = 0, scrambleType = 3, scrambleLength = 20, sessionNumber = 1;
 
 $(document).ready(function()
 {
+	//localStorage.clear();
 	if (localStorage.getItem("sessionNumber") == null)
 		localStorage.setItem("sessionNumber", sessionNumber);
 	else
@@ -146,7 +147,6 @@ $(document).ready(function()
 					timeElapsed = minutes + ":" + seconds + "." + milliseconds;
 				}
 				$("#timer").text(timeElapsed);
-				solveNumber += 1;
 				var solveObj = {
 					time: timeElapsed,
 					avg5: "DNF",
@@ -399,6 +399,15 @@ function printTimes()
 		printTimes();
 	});
 	$(document).on("click", ".deleteButton", function () {
+		solveIndex = this.id.substring(12);
+		if (solveIndex > -1)
+		{
+    		sessionObj.list.splice(solveIndex - 1, 1);
+    		sessionObj.numSolves -= 1;
+    		typingComment = 0;
+    	}
+		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
+		printTimes();
 		alert("How many times did you delete to get that average?");
 	});
 	$(document).on("click", ".avg5Cell", function () {
