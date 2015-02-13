@@ -318,7 +318,7 @@ function printTimes()
 		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-danger DNFButton\" id=\"DNFButton" + solveIndex + "\">DNF</button>");
 		dataContent = dataContent.concat("</div>");
 		dataContent = dataContent.concat("<div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"...\">");
-		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-default\" id=\"deleteButton\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>");
+		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-default deleteButton\" id=\"deleteButton" + solveIndex + "\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>");
 		dataContent = dataContent.concat("</div>");
 		dataContent = dataContent.concat("</div>");
 		dataContent = dataContent.concat("<input type=\"text\" class=\"form-control input-sm commentInput\" id=\"commentInput" + solveIndex + "\" placeholder=\"comment\">");
@@ -397,6 +397,9 @@ function printTimes()
 		sessionObj.list[solveIndex - 1].penalty = 2;
 		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
 		printTimes();
+	});
+	$(document).on("click", ".deleteButton", function () {
+		alert("How many times did you delete to get that average?");
 	});
 	$(document).on("click", ".avg5Cell", function () {
 		var solveNumber = this.id.substring(8);
