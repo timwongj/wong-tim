@@ -124,9 +124,9 @@ $(document).ready(function()
 	printScramble();
 	$(document).on('keydown', function (e)
 	{
-		if ((e.keyCode === 32) && (typingComment == 0))
+		if (e.keyCode === 32)
 		{
-			if (isTiming == 0)
+			if ((isTiming == 0) && (typingComment == 0))
 				$("#timer").css('color', 'green');
 			else if (allowedToUpdate == 1)
 			{
@@ -277,9 +277,19 @@ function printTimes()
 	{
 		var tableHtml = "<tr>\n<td>" + (i + 1);
 		tableHtml = tableHtml.concat("</td>\n<td class=\"timesCell\" id=\"timesCell" + (i + 1) + "\" title=\"<b>");
-		tableHtml = tableHtml.concat(sessionObj.list[i].time);
+		if (sessionObj.list[i].penalty == 1)
+			tableHtml = tableHtml.concat((+sessionObj.list[i].time + 2).toFixed(3) + "+");
+		else if (sessionObj.list[i].penalty == 2)
+			tableHtml = tableHtml.concat("DNF(" + sessionObj.list[i].time + 2 + ")");
+		else
+			tableHtml = tableHtml.concat(sessionObj.list[i].time);
 		tableHtml = tableHtml.concat("</b>\" data-container=\"#timesCell" + (i + 1) + "\" data-toggle=\"popover\" data-placement=\"right\" data-content=\"\">");
-		tableHtml = tableHtml.concat(sessionObj.list[i].time);
+		if (sessionObj.list[i].penalty == 1)
+			tableHtml = tableHtml.concat((+sessionObj.list[i].time + 2).toFixed(3) + "+");
+		else if (sessionObj.list[i].penalty == 2)
+			tableHtml = tableHtml.concat("DNF");
+		else
+			tableHtml = tableHtml.concat(sessionObj.list[i].time);
 		tableHtml = tableHtml.concat("</td>\n<td class=\"avg5Cell\" id=\"avg5Cell" + (i + 1) + "\" data-toggle=\"modal\" data-target=\"#myModal\">");
 		tableHtml = tableHtml.concat(sessionObj.list[i].avg5);
 		tableHtml = tableHtml.concat("</td>\n<td class=\"avg12Cell\" id=\"avg12Cell" + (i + 1) + "\" data-toggle=\"modal\" data-target=\"#myModal\">");
@@ -303,15 +313,15 @@ function printTimes()
 		var dataContent = "";
 		dataContent = dataContent.concat("<div class=\"btn-toolbar\" role=\"toolbar\" aria-label=\"...\">");
 		dataContent = dataContent.concat("<div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"...\">");
-		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-success \" id=\"okButton\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span></button>");
-		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-warning \" id=\"plus2Button\">+2</button>");
-		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-danger \" id=\"DNFButton\">DNF</button>");
+		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-success okButton\" id=\"okButton" + solveIndex + "\"><span class=\"glyphicon glyphicon-ok\" aria-hidden=\"true\"></span></button>");
+		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-warning plus2Button\" id=\"plus2Button" + solveIndex + "\">+2</button>");
+		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-danger DNFButton\" id=\"DNFButton" + solveIndex + "\">DNF</button>");
 		dataContent = dataContent.concat("</div>");
 		dataContent = dataContent.concat("<div class=\"btn-group btn-group-xs\" role=\"group\" aria-label=\"...\">");
 		dataContent = dataContent.concat("<button type=\"button\" class=\"btn btn-default\" id=\"deleteButton\"><span class=\"glyphicon glyphicon-remove\" aria-hidden=\"true\"></span></button>");
 		dataContent = dataContent.concat("</div>");
 		dataContent = dataContent.concat("</div>");
-		dataContent = dataContent.concat("<input type=\"text\" class=\"form-control input-sm\" id=\"commentInput\" placeholder=\"comment\">");
+		dataContent = dataContent.concat("<input type=\"text\" class=\"form-control input-sm commentInput\" id=\"commentInput" + solveIndex + "\" placeholder=\"comment\">");
 		$("#" + this.id).attr("data-content", dataContent);
 		$(document).on('keydown', function (e)
 		{
@@ -322,8 +332,7 @@ function printTimes()
 		{
 			if ((e.keyCode === 13) && (fired == 1))
 			{
-				sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
-				sessionObj.list[solveIndex - 1].comment = $("#commentInput").val();
+				sessionObj.list[solveIndex - 1].comment = $(".commentInput").val();
 				localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
 				printTimes();
 				fired = 0;
@@ -371,6 +380,24 @@ function printTimes()
         	console.log("hidden");
     	}
 	});
+	$(document).on("click", ".okButton", function () {
+		solveIndex = this.id.substring(8);
+		sessionObj.list[solveIndex - 1].penalty = 0;
+		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
+		printTimes();
+	})
+	$(document).on("click", ".plus2Button", function () {
+		solveIndex = this.id.substring(11);
+		sessionObj.list[solveIndex - 1].penalty = 1;
+		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
+		printTimes();
+	});
+	$(document).on("click", ".DNFButton", function () {
+		solveIndex = this.id.substring(9);
+		sessionObj.list[solveIndex - 1].penalty = 2;
+		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
+		printTimes();
+	});
 	$(document).on("click", ".avg5Cell", function () {
 		var solveNumber = this.id.substring(8);
 		var date = new Date(sessionObj.list[solveNumber - 1].date);
@@ -398,20 +425,23 @@ function printTimes()
 				minIndex -= 1;
 			for (i = 4; i >= 0; i--)
 			{
-				if ((sessionObj.list[solveNumber - 1 - i].comment == null))
-				{
-					if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
-					$("#myModalBody").append("<p>" + (5 - i) + ". (" + sessionObj.list[solveNumber - 1 - i].time + ") " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
+				var modalBody = "";
+				modalBody = modalBody.concat("<p>" + (5 - i) + ". ");
+				if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
+					modalBody = modalBody.concat("(");
+				if (sessionObj.list[solveNumber - 1 - i].penalty == 1)
+					modalBody = modalBody.concat((+sessionObj.list[i].time + 2).toFixed(3) + "+");
+				else if (sessionObj.list[solveNumber - 1 - i].penalty == 2)
+					modalBody = modalBody.concat("DNF(" + sessionObj.list[solveNumber - 1 - i].time + ")");
 				else
-					$("#myModalBody").append("<p>" + (5 - i) + ". " + sessionObj.list[solveNumber - 1 - i].time + " " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
-				}
-				else
-				{
-					if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
-						$("#myModalBody").append("<p>" + (5 - i) + ". (" + sessionObj.list[solveNumber - 1 - i].time + ") " + sessionObj.list[solveNumber - 1 - i].scramble + " " + sessionObj.list[solveNumber - 1 - i].comment + "</p>");
-					else
-						$("#myModalBody").append("<p>" + (5 - i) + ". " + sessionObj.list[solveNumber - 1 - i].time + " " + sessionObj.list[solveNumber - 1 - i].scramble + " " + sessionObj.list[solveNumber - 1 - i].comment + "</p>");
-				}
+					modalBody = modalBody.concat(sessionObj.list[solveNumber - 1 - i].time);
+				if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
+					modalBody = modalBody.concat(")");
+				modalBody = modalBody.concat(" " + sessionObj.list[solveNumber - 1 - i].scramble);
+				if ((sessionObj.list[solveNumber - 1 - i].comment != null) && (sessionObj.list[solveNumber - 1 - i].comment != ""))
+					modalBody = modalBody.concat(" (" + sessionObj.list[solveNumber - 1 - i].comment + ")");
+				modalBody = modalBody.concat("</p>");
+				$("#myModalBody").append(modalBody);
 			}
 		}
 	});
@@ -442,20 +472,23 @@ function printTimes()
 				minIndex -= 1;
 			for (i = 11; i >= 0; i--)
 			{
-				if (sessionObj.list[solveNumber - 1 - i].comment == null)
-				{
-					if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
-					$("#myModalBody").append("<p>" + (12 - i) + ". (" + sessionObj.list[solveNumber - 1 - i].time + ") " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
+				var modalBody = "";
+				modalBody = modalBody.concat("<p>" + (12 - i) + ". ");
+				if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
+					modalBody = modalBody.concat("(");
+				if (sessionObj.list[solveNumber - 1 - i].penalty == 1)
+					modalBody = modalBody.concat((+sessionObj.list[i].time + 2).toFixed(3) + "+");
+				else if (sessionObj.list[solveNumber - 1 - i].penalty == 2)
+					modalBody = modalBody.concat("DNF(" + sessionObj.list[solveNumber - 1 - i].time + ")");
 				else
-					$("#myModalBody").append("<p>" + (12 - i) + ". " + sessionObj.list[solveNumber - 1 - i].time + " " + sessionObj.list[solveNumber - 1 - i].scramble + "</p>");
-				}
-				else
-				{
-					if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
-						$("#myModalBody").append("<p>" + (12 - i) + ". (" + sessionObj.list[solveNumber - 1 - i].time + ") " + sessionObj.list[solveNumber - 1 - i].scramble + " " + sessionObj.list[solveNumber - 1 - i].comment + "</p>");
-					else
-						$("#myModalBody").append("<p>" + (12 - i) + ". " + sessionObj.list[solveNumber - 1 - i].time + " " + sessionObj.list[solveNumber - 1 - i].scramble + " " + sessionObj.list[solveNumber - 1 - i].comment + "</p>");
-				}
+					modalBody = modalBody.concat(sessionObj.list[solveNumber - 1 - i].time);
+				if (((solveNumber - 1 - i) == minIndex) || ((solveNumber - 1 - i) == maxIndex))
+					modalBody = modalBody.concat(")");
+				modalBody = modalBody.concat(" " + sessionObj.list[solveNumber - 1 - i].scramble);
+				if (sessionObj.list[solveNumber - 1 - i].comment != null)
+					modalBody = modalBody.concat(" " + sessionObj.list[solveNumber - 1 - i].comment);
+				modalBody = modalBody.concat("</p>");
+				$("#myModalBody").append(modalBody);
 			}
 		}
 	});
@@ -468,51 +501,105 @@ function updateAverages()
 	{
 		if (i >= 4)
 		{
-			var minIndex = i, maxIndex = i, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
-			for (j = i; j > i - 5; j--)
+			var tempList = [];
+			var DNFCount = 0;
+			for (j = 0; j < 5; j++)
 			{
-				if (sessionObj.list[j].time > maxValue)
+				if (sessionObj.list[i - j].penalty == 1)
+					tempList[j] = (+sessionObj.list[i - j].time + 2).toFixed(3);
+				else if (sessionObj.list[i - j].penalty == 2)
+				{
+					tempList[j] = -1;
+					DNFCount += 1;
+				}
+				else
+					tempList[j] = sessionObj.list[i - j].time;
+			}
+			var minIndex = 0, maxIndex = 0, minValue = tempList[0], maxValue = tempList[0], maxFound = 0;
+			if (tempList[0] == -1)
+			{
+				minIndex = 1;
+				minValue = tempList[1];
+			}
+			for (j = 0; j < 5; j++)
+			{
+				if (tempList[j] == -1)
 				{
 					maxIndex = j;
-					maxValue = sessionObj.list[j].time;
+					maxValue = tempList[j];
+					maxFound = 1;
 				}
-				if (sessionObj.list[j].time < minValue)
+				if ((tempList[j] > maxValue) && (maxFound == 0))
+				{
+					maxIndex = j;
+					maxValue = tempList[j].time;
+				}
+				if ((tempList[j] < minValue) && (tempList[j] > 0))
 				{
 					minIndex = j;
-					minValue = sessionObj.list[j].time;
+					minValue = tempList[j].time;
 				}
 			}
 			if ((minIndex == i) && (maxIndex == i))
 				minIndex -= 1;
 			var sum = 0;
-			for (j = i; j > i - 5; j--)
+			for (j = 0; j < 5; j++)
 				if (!((j == minIndex) || (j == maxIndex)))
-					sum += +sessionObj.list[j].time;
+					sum += +tempList[j];
 			sessionObj.list[i].avg5 = (sum / 3).toFixed(3);
+			if (DNFCount > 1)
+				sessionObj.list[i].avg5 = "DNF";
 		}
 		if (i >= 11)
 		{
-			var minIndex = i, maxIndex = i, minValue = sessionObj.list[i].time, maxValue = sessionObj.list[i].time;
-			for (j = i; j > i - 12; j--)
+			var tempList = [];
+			var DNFCount = 0;
+			for (j = 0; j < 12; j++)
 			{
-				if (sessionObj.list[j].time > maxValue)
+				if (sessionObj.list[i - j].penalty == 1)
+					tempList[j] = (+sessionObj.list[i - j].time + 2).toFixed(3);
+				else if (sessionObj.list[i - j].penalty == 2)
+				{
+					tempList[j] = -1;
+					DNFCount += 1;
+				}
+				else
+					tempList[j] = sessionObj.list[i - j].time;
+			}
+			var minIndex = 0, maxIndex = 0, minValue = tempList[0], maxValue = tempList[0], maxFound = 0;
+			if (tempList[0] == -1)
+			{
+				minIndex = 1;
+				minValue = tempList[1];
+			}
+			for (j = 0; j < 12; j++)
+			{
+				if (tempList[j] == -1)
 				{
 					maxIndex = j;
-					maxValue = sessionObj.list[j].time;
+					maxValue = tempList[j];
+					maxFound = 1;
 				}
-				if (sessionObj.list[j].time < minValue)
+				if ((tempList[j] > maxValue) && (maxFound == 0))
+				{
+					maxIndex = j;
+					maxValue = tempList[j].time;
+				}
+				if ((tempList[j] < minValue) && (tempList[j] > 0))
 				{
 					minIndex = j;
-					minValue = sessionObj.list[j].time;
+					minValue = tempList[j].time;
 				}
 			}
 			if ((minIndex == i) && (maxIndex == i))
 				minIndex -= 1;
 			var sum = 0;
-			for (j = i; j > i - 12; j--)
+			for (j = 0; j < 12; j++)
 				if (!((j == minIndex) || (j == maxIndex)))
-					sum += +sessionObj.list[j].time;
+					sum += +tempList[j];
 			sessionObj.list[i].avg12 = (sum / 10).toFixed(3);
+			if (DNFCount > 1)
+				sessionObj.list[i].avg12 = "DNF";
 		}
 	}
 	localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
