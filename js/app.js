@@ -385,21 +385,21 @@ function printTimes()
 		sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
 		sessionObj.list[solveIndex - 1].penalty = 0;
 		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
-		printTimes();
+		location.reload();
 	})
 	$(document).on("click", ".plus2Button", function () {
 		solveIndex = this.id.substring(11);
 		sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
 		sessionObj.list[solveIndex - 1].penalty = 1;
 		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
-		printTimes();
+		location.reload();
 	});
 	$(document).on("click", ".DNFButton", function () {
 		solveIndex = this.id.substring(9);
 		sessionObj = JSON.parse(localStorage.getItem("session" + sessionNumber));
 		sessionObj.list[solveIndex - 1].penalty = 2;
 		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
-		printTimes();
+		location.reload();
 	});
 	$(document).on("click", ".deleteButton", function () {
 		if (confirm("How many times did you delete to get that average?"))
