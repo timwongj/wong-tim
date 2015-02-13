@@ -399,16 +399,18 @@ function printTimes()
 		printTimes();
 	});
 	$(document).on("click", ".deleteButton", function () {
-		solveIndex = this.id.substring(12);
-		if (solveIndex > -1)
+		if (confirm("How many times did you delete to get that average?"))
 		{
-    		sessionObj.list.splice(solveIndex - 1, 1);
-    		sessionObj.numSolves -= 1;
-    		typingComment = 0;
-    	}
-		localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
-		printTimes();
-		alert("How many times did you delete to get that average?");
+			solveIndex = this.id.substring(12);
+			if (solveIndex > -1)
+			{
+    			sessionObj.list.splice(solveIndex - 1, 1);
+    			sessionObj.numSolves -= 1;
+    			typingComment = 0;
+    		}
+			localStorage.setItem("session" + sessionNumber, JSON.stringify(sessionObj));
+			printTimes();
+		}
 	});
 	$(document).on("click", ".avg5Cell", function () {
 		var solveNumber = this.id.substring(8);
