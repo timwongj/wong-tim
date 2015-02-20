@@ -13,11 +13,11 @@ app.config(function ($routeProvider) {
 });
 
 app.run(function($rootScope, $location) {
-	$rootScope.$on("$routeChangeSuccess", function(ebent, next, current) {
+	$rootScope.$on("$routeChangeSuccess", function(event, next, current) {
       update();
 	});
 });
-  
+
 function update()
 {
 	$.get("data/cornerComms.csv", function(data) {
