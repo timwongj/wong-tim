@@ -21,7 +21,7 @@ app.run(function($rootScope, $location) {
 function update()
 {
 	$.get("data/cornerComms.csv", function(data) {
-   		$("#cornerCommsTableHead").html("<tr><th>1st Target</th><th>2nd Target</th><th>Primary Algorithm</th><th># Moves</th><th>Secondary Algorithm</th><th># Moves</th></tr>");
+   		$("#cornerCommsTableHead").html("<tr><th>1st Target</th><th>2nd Target</th><th>Primary Algorithm</th><th># Moves</th><th>Alternative Algorithm</th><th># Moves</th></tr>");
    		var lines = data.split("\n");
    		for (i = 1; i < lines.length; i++)
    		{
@@ -30,7 +30,7 @@ function update()
 		}
 	}, "text");
 	$.get("data/edgeComms.csv", function(data) {
-   		$("#edgeCommsTableHead").html("<tr><th>1st Target</th><th>2nd Target</th><th>Primary Algorithm</th><th># Moves</th><th>Secondary Algorithm</th><th># Moves</th></tr>");
+   		$("#edgeCommsTableHead").html("<tr><th>1st Target</th><th>2nd Target</th><th>Primary Algorithm</th><th># Moves</th><th>Alternative Algorithm</th><th># Moves</th></tr>");
    		var lines = data.split("\n");
    		for (i = 1; i < lines.length; i++)
    		{
