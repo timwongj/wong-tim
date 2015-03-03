@@ -116,6 +116,6 @@ button {
 	margin:10px;
 }
 
-th, .centerCol {
+th, .centerCol, .centeredDiv {
 	text-align:center;
 }
