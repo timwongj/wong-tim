@@ -107,3 +107,15 @@
 	text-align:center;
 	vertical-align:middle;
 }
+
+.control-label {
+	text-align:right;
+}
+
+button {
+	margin:10px;
+}
+
+th, .centerCol {
+	text-align:center;
+}
