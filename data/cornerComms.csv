@@ -53,7 +53,7 @@
 52,FRU,DBR,x' [U2 (L D' L') U2 (L D L')] x,8,,
 53,FRU,RDB,F [(R U2 R') D' (R U2 R') D] F',10,D' x' [D (R' U2 R) D' (R' U2 R)] x D,10
 54,FRU,BRD,y x' [(L' U L) D2 (L' U' L) D2] x y',8,,
-55,UFL,UFR,x' [(L' U L') D2 (L U' L') D2 L2] x,9,,
+55,UFL,UFR,x' [L2 D2 (L U L') D2 (L U' L)] x,9,,
 56,UFL,RUF,x' [D (R U' R') D' (R U R')] x,8,,
 57,UFL,FRU,[L2 D' (L U2 L') D (L U2 L)],9,,
 58,UFL,UBR,x [(L U' L) D2 (L' U L) D2 L2] x',9,,
@@ -107,7 +107,7 @@
 106,LUF,DBR,y D' [(R' U2 R') D (R U2 R') D' R2] D y',11,,
 107,LUF,RDB,y' x [(R' U2 R') D (R U2 R') D' R2] x' y,9,,
 108,LUF,BRD,y' [(R U2 R) D' (R' U2 R) D R2] y,9,,
-109,UBR,UFR,x [(R' U R') D2 (R U' R') D2 R2] x',9,,
+109,UBR,UFR,x [R2 D2 (R U R') D2 (R U' R)] x',9,,
 110,UBR,RUF,y [R2 D (R' U2 R) D' (R' U2 R')] y',9,,
 111,UBR,FRU,[R' (F' r U) R (U' r' F)],8,,
 112,UBR,UFL,x [L2 D2 (L' U' L) D2 (L' U L')] x',9,,
