@@ -1,22 +1,22 @@
-Target,Optimized Algorithm,# Moves,Notes,Alternative Algorithm,# Moves,Notes
+Target,Primary Algorithm,# Moves,Notes,Alternative Algorithm,# Moves,Notes
 UFR,F R U' R' U' R U R' F' R U R' U' R' F R F',17,Y Perm,,,
-RFU,U' R' U' R U R' F' R U R' U' R' F R2,14,Y Perm,F' U2 (R U R' F' R U R' U' R' F R2 U' R' U) F,17,J Perm
+RUF,U' R' U' R U R' F' R U R' U' R' F R2,14,Y Perm,F' U2 (R U R' F' R U R' U' R' F R2 U' R' U) F,17,J Perm
 FRU,U L' U2 R U' R' U2 L R U' R',10,J Perm,,,
 UFL,U2 (R U R' F' R U R' U' R' F R2 U' R' U),15,J Perm,,,
 FLU,F (U L' U2 R U' R' U2 L R U' R') F',13,J Perm,,,
-LFU,F2 (R U' R' U' R U R' F' R U R' U' R' F R) F2,17,Y Perm,,,
+LUF,F2 (R U' R' U' R U R' F' R U R' U' R' F R) F2,17,Y Perm,,,
 UBR,R' U L' U2 R U' R' U2 L R U',11,J Perm,,,
-BRU,R' (F R U' R' U' R U R' F' R U R' U' R' F R F') R,19,Y Perm,,,
-RBU,R' U' R' U' R U R' F' R U R' U' R' F R',15,Y Perm,R' F' U2 (R U R' F' R U R' U' R' F R2 U' R' U) F R,19,J Perm
+RUB,R' (F R U' R' U' R U R' F' R U R' U' R' F R F') R,19,Y Perm,,,
+BRU,R' U' R' U' R U R' F' R U R' U' R' F R',15,Y Perm,R' F' U2 (R U R' F' R U R' U' R' F R2 U' R' U) F R,19,J Perm
 DFR,(R U L' U2 R U' R' U2 L R U') R2,12,J Perm,D R2 F R U' R' U' R U R' F' R U R' U' R' F R F' R2 D',21,Y Perm
-FDR,R (F R U' R' U' R U R' F' R U R' U' R' F R F') R',19,Y Perm,,,
+FRD,R (F R U' R' U' R U R' F' R U R' U' R' F R F') R',19,Y Perm,,,
 RDF,R U' R' U' R U R' F' R U R' U' R' F R,15,Y Perm,,,
 DFL,F' (R U' R' U' R U R' F' R U R' U' R' F R) F,17,Y Perm,,,
 LDF,D R (F R U' R' U' R U R' F' R U R' U' R' F R F') R' D',21,Y Perm,,,
-FDL,D (R U' R' U' R U R' F' R U R' U' R' F R) D',19,Y Perm,,,
+FLD,D (R U' R' U' R U R' F' R U R' U' R' F R) D',19,Y Perm,,,
 DBL,D' (R2 F R U' R' U' R U R' F' R U R' U' R' F R F' R2) D,21,Y Perm,,,
-BDL,D2 R (F R U' R' U' R U R' F' R U R' U' R' F R F') R' D2,21,Y Perm,,,
-LBD,D2 (R U' R' U' R U R' F' R U R' U' R' F R) D2,17,Y Perm,,,
+BLD,D2 R (F R U' R' U' R U R' F' R U R' U' R' F R F') R' D2,21,Y Perm,,,
+LDB,D2 (R U' R' U' R U R' F' R U R' U' R' F R) D2,17,Y Perm,,,
 DBR,R2 (F R U' R' U' R U R' F' R U R' U' R' F R F') R2,19,Y Perm,,,
 RDB,D' R (F R U' R' U' R U R' F' R U R' U' R' F R F') R' D,21,Y Perm,,,
-BDR,D' (R U' R' U' R U R' F' R U R' U' R' F R) D,17,Y Perm,,,
+BRD,D' (R U' R' U' R U R' F' R U R' U' R' F R) D,17,Y Perm,,,
