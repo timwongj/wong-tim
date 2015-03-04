@@ -56,6 +56,10 @@ function update()
         	$("#M2AlgsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[0]) + "</td><td>" + line[1] + "</td><td class=\"centerCol\">" + line[2] + "</td><td class=\"centerCol\">" + line[3] + "</td><td>" + line[4] + "</td><td class=\"centerCol\">" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
 		}
 	}, "text");	
+	if (localStorage.getItem("edges") == null)
+		localStorage.setItem("edges", JSON.stringify({UR:"UR", RU:"RU", UF:"UF", FU:"FU", UL:"UL", LU:"LU", UB:"UB", BU:"BU", DR:"DR", RD:"RD", DL:"DL", LD:"LD", DB:"DB", BD:"BD", FL:"FL", LF:"LF", FR:"FR", RF:"RF", BL:"BL", LB:"LB", BR:"BR", RB:"RB"}));
+	if (localStorage.getItem("corners") == null)
+		localStorage.setItem("corners", JSON.stringify({UFR:"UFR", RUF:"RUF", FRU:"FRU", UFL:"UFL", FLU:"FLU", LUF:"LUF", UBR:"UBR", RUB:"RUB", BRU:"BRU", DFR:"DFR", FRD:"FRD", RDF:"RDF", DFL:"DFL", LDF:"LDF", FLD:"FLD", DBL:"DBL", BLD:"BLD", LDB:"LDB", DBR:"DBR", RDB:"RDB", BRD:"BRD"}));
 	$(document).on("click", "#resetButton", function() {
 		localStorage.setItem("edges", JSON.stringify({UR:"UR", RU:"RU", UF:"UF", FU:"FU", UL:"UL", LU:"LU", UB:"UB", BU:"BU", DR:"DR", RD:"RD", DL:"DL", LD:"LD", DB:"DB", BD:"BD", FL:"FL", LF:"LF", FR:"FR", RF:"RF", BL:"BL", LB:"LB", BR:"BR", RB:"RB"}));
 		localStorage.setItem("corners", JSON.stringify({UFR:"UFR", RUF:"RUF", FRU:"FRU", UFL:"UFL", FLU:"FLU", LUF:"LUF", UBR:"UBR", RUB:"RUB", BRU:"BRU", DFR:"DFR", FRD:"FRD", RDF:"RDF", DFL:"DFL", LDF:"LDF", FLD:"FLD", DBL:"DBL", BLD:"BLD", LDB:"LDB", DBR:"DBR", RDB:"RDB", BRD:"BRD"}));
@@ -111,6 +115,8 @@ function displayScheme() {
 }
 
 function getSymbol(target) {
+	if (target == null)
+		return target;
 	var edges = JSON.parse(localStorage.getItem("edges"));
 	var corners = JSON.parse(localStorage.getItem("corners"));
 	switch (target) {
