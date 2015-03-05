@@ -26,7 +26,7 @@ function update()
    		for (i = 1; i < lines.length; i++)
    		{
         	var line = lines[i].split(",");
-        	$("#cornerCommsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[1]) + "</td><td class=\"centerCol\">" + getSymbol(line[2]) + "</td><td>" + line[3] + "</td><td class=\"centerCol\">" + line[4] + "</td><td>" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
+        	$("#cornerCommsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[1]) + "</td><td class=\"centerCol\">" + getSymbol(line[2]) + "</td><td><a href=" + createLink(line[3], invertMoves(line[3])) + " target=\"blank\">" + line[3] + "</a></td><td class=\"centerCol\">" + line[4] + "</td><td><a href=" + createLink(line[5], invertMoves(line[5])) + " target=\"blank\">" + line[5] + "</a></td><td class=\"centerCol\">" + line[6] + "</td></tr>");
 		}
 	}, "text");
 	$.get("data/edgeComms.csv", function(data) {
@@ -35,7 +35,7 @@ function update()
    		for (i = 1; i < lines.length; i++)
    		{
         	var line = lines[i].split(",");
-        	$("#edgeCommsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[1]) + "</td><td class=\"centerCol\">" + getSymbol(line[2]) + "</td><td>" + line[3] + "</td><td class=\"centerCol\">" + line[4] + "</td><td>" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
+        	$("#edgeCommsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[1]) + "</td><td class=\"centerCol\">" + getSymbol(line[2]) + "</td><td><a href=" + createLink(line[3], invertMoves(line[3])) + " target=\"blank\">" + line[3] + "</a></td><td class=\"centerCol\">" + line[4] + "</td><td><a href=" + createLink(line[5], invertMoves(line[5])) + " target=\"blank\">" + line[5] + "</a></td><td class=\"centerCol\">" + line[6] + "</td></tr>");
 		}
 	}, "text");
 	$.get("data/OPAlgs.csv", function(data) {
@@ -43,8 +43,8 @@ function update()
    		var lines = data.split("\n");
    		for (i = 1; i < lines.length; i++)
    		{
-        	var line = lines[i].split(",");
-        	$("#OPAlgsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[0]) + "</td><td>" + line[1] + "</td><td class=\"centerCol\">" + line[2] + "</td><td class=\"centerCol\">" + line[3] + "</td><td>" + line[4] + "</td><td class=\"centerCol\">" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
+        	var line = lines[i].split(",");        	
+        	$("#OPAlgsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[0]) + "</td><td><a href=" + createLink(line[1], line[1]) + " target=\"blank\">" + line[1] + "</a></td><td class=\"centerCol\">" + line[2] + "</td><td class=\"centerCol\">" + line[3] + "</td><td><a href=" + createLink(line[4], line[4]) + " target=\"blank\">" + line[4] + "</a></td><td class=\"centerCol\">" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
 		}
 	}, "text");
 	$.get("data/M2Algs.csv", function(data) {
@@ -53,7 +53,7 @@ function update()
    		for (i = 1; i < lines.length; i++)
    		{
         	var line = lines[i].split(",");
-        	$("#M2AlgsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[0]) + "</td><td>" + line[1] + "</td><td class=\"centerCol\">" + line[2] + "</td><td class=\"centerCol\">" + line[3] + "</td><td>" + line[4] + "</td><td class=\"centerCol\">" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
+        	$("#M2AlgsTableBody").append("<tr><td class=\"centerCol\">" + getSymbol(line[0]) + "</td><td><a href=" + createLink(line[1], line[1]) + " target=\"blank\">" + line[1] + "</a></td><td class=\"centerCol\">" + line[2] + "</td><td class=\"centerCol\">" + line[3] + "</td><td><a href=" + createLink(line[4], line[4]) + " target=\"blank\">" + line[4] + "</a></td><td class=\"centerCol\">" + line[5] + "</td><td class=\"centerCol\">" + line[6] + "</td></tr>");
 		}
 	}, "text");	
 	if (localStorage.getItem("edges") == null)
@@ -166,3 +166,143 @@ function getSymbol(target) {
 		default: return target;
 	}
 }
+
+function createLink(alg, setup)
+{
+	alg = alg.replace(/\[/g, "");
+	alg = alg.replace(/\]/g, "");
+	alg = alg.replace(/ /g, "_");
+	alg = alg.replace(/'/g, "-");
+	alg = alg.replace(/M2/g, "M2-");
+	setup = setup.replace(/\[/g, "");
+	setup = setup.replace(/\]/g, "");
+	setup = setup.replace(/ /g, "_");
+	setup = setup.replace(/'/g, "-");
+	setup = setup.replace(/M2/g, "M2-");
+	console.log("http://alg.cubing.net/?alg=" + alg + "&setup=" + setup + "&title=alg.garron.us");
+	return "http://alg.cubing.net/?alg=" + alg + "&setup=" + setup + "&title=alg.garron.us";
+}
+
+function invertMoves(moves)
+{
+    var temp, inverse = "", movesVector = moves.split(" ");
+    for (var i = movesVector.length - 1; i >= 0; i--)
+    {
+        temp = "";
+        if (movesVector[i].length == 4)
+        {
+            if (movesVector[i].substr(0, 1) == "[")
+            {
+                temp += movesVector[i].substr(2, 1);
+                if (movesVector[i].substr(3, 1) == "2")
+                    temp += "2";
+                temp += ")]";
+            }
+            else
+            {
+                temp += "[(";
+                temp += movesVector[i].substr(0, 1);
+                if (movesVector[i].substr(1, 1) == "2")
+                    temp += "2";
+            }
+        }
+        else if (movesVector[i].length == 3)
+        {
+            if (movesVector[i].substr(0, 1) == "[")
+            {
+                if (movesVector[i].substr(1, 1) == "(")
+                {
+                    temp += movesVector[i].substr(2, 1);
+                    temp += "'";
+                    temp += ")";
+                }
+                else
+                {
+                    temp += movesVector[i].substr(1, 1);
+                    if (movesVector[i].substr(2, 1) != "'")
+                        temp += "2";
+                }
+                temp += "]";
+            }
+            else if (movesVector[i].substr(0, 1) == "(")
+            {
+                temp += movesVector[i].substr(1, 1);
+                if (movesVector[i].substr(2, 1) != "'")
+                    temp += "2";
+                temp += ")";
+            }
+            else
+            {
+                if (movesVector[i].substr(2, 1) == "]")
+                {
+                    temp += "[";
+                    if (movesVector[i].substr(1, 1) == ")")
+                    {
+                        temp += "(";
+                        temp += movesVector[i].substr(0, 1);
+                        temp += "'";
+                    }
+                    else
+                    {
+                        temp += movesVector[i].substr(0, 1);
+                        if (movesVector[i].substr(1, 1) != "'")
+                            temp += "2";
+                    }
+                }
+                else if (movesVector[i].substr(2, 1) == ")")
+                {
+                    temp += "(";
+                    temp += movesVector[i].substr(0, 1);
+                    if (movesVector[i].substr(1, 1) == "2")
+                        temp += "2";
+                }
+            }
+        }
+        else if (movesVector[i].length == 2)
+        {
+            if (movesVector[i].substr(0, 1) == "[")
+            {
+                temp += movesVector[i].substr(1, 1);
+                temp += "'";
+                temp += "]";
+            }
+            else if (movesVector[i].substr(0, 1) == "(")
+            {
+                temp += movesVector[i].substr(1, 1);
+                temp += "'";
+                temp += ")";
+            }
+            else if (movesVector[i].substr(1, 1) == ")")
+            {
+                temp += "(";
+                temp += movesVector[i].substr(0, 1);
+                temp += "'";
+            }
+            else if (movesVector[i].substr(1, 1) == "]")
+            {
+                temp += "[";
+                temp += movesVector[i].substr(0, 1);
+                temp += "'";
+            }
+            else if (movesVector[i].substr(1, 1) == "2")
+            {
+                temp += movesVector[i].substr(0, 1);
+                temp += "2";
+            }
+            else if (movesVector[i].substr(1, 1) == "'")
+            {
+                temp += movesVector[i].substr(0, 1);
+            }
+        }
+        else if (movesVector[i].length == 1)
+        {
+            temp += movesVector[i];
+            temp += "'";
+        }
+        inverse += temp;
+        if (i > 0)
+            inverse += " ";
+    }
+    return inverse;
+}
+
